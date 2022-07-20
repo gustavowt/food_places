@@ -10,17 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_20_011206) do
+ActiveRecord::Schema[7.0].define(version: 2022_07_20_015544) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "postgis"
 
-  create_table "spatial_ref_sys", primary_key: "srid", id: :integer, default: nil, force: :cascade do |t|
-    t.string "auth_name", limit: 256
-    t.integer "auth_srid"
-    t.string "srtext", limit: 2048
-    t.string "proj4text", limit: 2048
-    t.check_constraint "srid > 0 AND srid <= 998999", name: "spatial_ref_sys_srid_check"
+  create_table "food_places", force: :cascade do |t|
+    t.string "external_id"
+    t.string "applicant"
+    t.string "facility_type"
+    t.string "address"
+    t.string "status"
+    t.string "fooditems"
+    t.geography "geo_point", limit: {:srid=>4326, :type=>"st_point", :geographic=>true}, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["facility_type"], name: "index_food_places_on_facility_type"
+    t.index ["geo_point"], name: "index_food_places_on_geo_point", using: :gist
+    t.index ["status"], name: "index_food_places_on_status"
   end
 
 end
