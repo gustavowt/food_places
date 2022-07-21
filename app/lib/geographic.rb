@@ -13,7 +13,7 @@ module Geographic
     spherical_factory.point(long, lat)
   end
 
-  def mkt(feature)
-    "srid=#{SRID};#{feature}"
+  def srid_point(feature)
+    "SRID=#{SRID};POINT(#{feature})"
   end
 end

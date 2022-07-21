@@ -1,11 +1,11 @@
 class FoodPlace < ApplicationRecord
   validates :geo_point, :status, :facility_type, presence: true
 
-  scope :closest_location, lambda { |point, distance|
-    where(
-      'ST_DWithin(geo_point, :point, :distance)',
-      { point: Geographic.mkt(point), distance: distance * 1000 }
-    )
+  scope :closest_location, lambda { |point, limit|
+    select(%(
+      *,
+      geo_point <-> '#{Geographic.srid_point(point)}' as dist
+      )).limit(limit)
   }
 
   def spherical_point=(value)
