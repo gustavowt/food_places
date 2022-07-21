@@ -1,24 +1,15 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Look for nearest places based on https://data.sfgov.org/resource/rqzj-sfat.json data.
 
-Things you may want to cover:
+# Setup
 
-* Ruby version
+```
+rake db:seed
+```
 
-* System dependencies
+# Nearest japanese restaurant on union square
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+```
+curl -H "Content-Type: application/json" -X GET "http://localhost:3000/nearest_food_places?address=union%20square&limit=1&fooditem=Japanese&facility_type=truck"
+```
